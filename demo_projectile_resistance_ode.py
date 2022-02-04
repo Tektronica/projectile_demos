@@ -2,26 +2,41 @@ import numpy as np
 from scipy.integrate import solve_ivp
 import matplotlib.pyplot as plt
 
-c = 0.47  # drag coefficient
+# https://scipython.com/book2/chapter-8-scipy/examples/a-projectile-with-air-resistance/
+# https://en.wikipedia.org/wiki/Projectile_motion
+# http://orca.phys.uvic.ca/~tatum/classmechs/class7.pdf
+# https://ipython-books.github.io/123-simulating-an-ordinary-differential-equation-with-scipy/
+# https://en.wikipedia.org/wiki/Ordinary_differential_equation
+# https://github.com/rossant/awesome-math/#ordinary-differential-equations
+# http://djm.cc/library/Differential_Equations_Phillips_edited.pdf
+
+G = 9.81  # acceleration due to gravity (m/s^2)
+
 r = 0.05  # projectile radius (m)
-A = np.pi * r ** 2  # area (m^2)
 m = 0.2  # mass (kg)
 
+c = 0.47  # drag coefficient
+A = np.pi * r ** 2  # area (m^2)
 rho_air = 1.28  # Air density (kg.m-3)
-g = 9.81  # acceleration due to gravity (m/s^2)
 
-# For convenience, define  this constant.
-k = 0.5 * c * rho_air * A
-
-# Initial speed and launch angle (from the horizontal).
-v0 = 50
-phi0 = np.radians(65)
+k = 0.5 * c * rho_air * A  # convenience constant.
 
 
 def run_demo():
-    # Initial conditions: x0, v0_x, z0, v0_z.
+    # Initial speed and launch angle (from the horizontal).
+    launch_angle = 65  # deg
+    launch_velocity = 50  # m/s
+    launch_height = 1  # m
+
+    run_projectile_resistance_demo(launch_angle, launch_velocity, launch_height)
+
+
+def run_projectile_resistance_demo(launch_angle, v0, h):
+    phi0 = np.radians(launch_angle)
+
+    # Initial conditions: x0, v0_x, y0, v0_y.
     u0 = 0, v0 * np.cos(phi0), 0., v0 * np.sin(phi0)
-    # Integrate up to tf unless we hit the target sooner.
+    # Interval of integration - Integrate up to tf unless we hit the target sooner.
     t0, tf = 0, 50
 
     # Stop the integration when we hit the target.
@@ -52,7 +67,7 @@ def deriv(t, u):
     x, Vx, y, Vy = u
     Vo = np.hypot(Vx, Vy)
     ax = -k / m * Vo * Vx  # acceleration in x direction
-    ay = -k / m * Vo * Vy - g  # acceleration in y direction
+    ay = -k / m * Vo * Vy - G  # acceleration in y direction
     return Vx, ax, Vy, ay
 
 
@@ -62,14 +77,19 @@ def hit_target(t, u):
 
 
 def max_height(t, u):
-    # The maximum height is obtained when the z-velocity is zero.
+    # The maximum height is obtained when the y-velocity is zero.
     return u[3]
 
 
 def plot(x, y):
+    fig, ax1 = plt.subplots()
     plt.plot(x, y)
-    plt.xlabel('distance (m)')
-    plt.ylabel('height (m)')
+
+    ax1.set_title('Projectile Demo with air resistance')
+    ax1.set_xlabel('distance (m)')
+    ax1.set_ylabel('height (m)')
+
+    plt.grid()
     plt.show()
 
 
