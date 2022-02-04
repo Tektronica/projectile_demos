@@ -9,24 +9,25 @@ import matplotlib.pyplot as plt
 # https://en.wikipedia.org/wiki/Ordinary_differential_equation
 # https://github.com/rossant/awesome-math/#ordinary-differential-equations
 # http://djm.cc/library/Differential_Equations_Phillips_edited.pdf
+# https://gamedev.stackexchange.com/a/149612
 
 G = 9.81  # acceleration due to gravity (m/s^2)
 
 r = 0.05  # projectile radius (m)
 m = 0.2  # mass (kg)
 
-c = 0.47  # drag coefficient
+Cd = 0.47  # drag coefficient
 A = np.pi * r ** 2  # area (m^2)
 rho_air = 1.28  # Air density (kg.m-3)
 
-k = 0.5 * c * rho_air * A  # convenience constant.
+k = 0.5 * Cd * rho_air * A  # convenience constant.
 
 
 def run_demo():
     # Initial speed and launch angle (from the horizontal).
     launch_angle = 65  # deg
     launch_velocity = 50  # m/s
-    launch_height = 1  # m
+    launch_height = 1.  # m
 
     run_projectile_resistance_demo(launch_angle, launch_velocity, launch_height)
 
@@ -34,11 +35,29 @@ def run_demo():
 def run_projectile_resistance_demo(launch_angle, v0, h):
     phi0 = np.radians(launch_angle)
 
-    # Initial conditions: x0, v0_x, y0, v0_y.
-    u0 = 0, v0 * np.cos(phi0), 0., v0 * np.sin(phi0)
-    # Interval of integration - Integrate up to tf unless we hit the target sooner.
-    t0, tf = 0, 50
+    # Initial conditions
+    x0 = 0.
+    y0 = h
+    Vx0 = v0 * np.cos(phi0)
+    Vy0 = v0 * np.sin(phi0)
 
+    u0 = x0, y0, Vx0, Vy0
+
+    # Interval of integration by ODE method up to tf
+    t0 = 0
+    tf = (Vy0 + np.sqrt(Vy0**2 + 2*G*h)) / G  # time of flight
+    steps = 1000
+    dt = tf / steps
+
+    # No drag ----------------------------------------------------------------------------------------------------------
+    X_ND = list()
+    Y_ND = list()
+
+    for t in range(steps + 1):
+        X_ND.append(x0 + Vx0 * dt * t)
+        Y_ND.append(y0 + Vy0 * dt * t - 0.5 * G * (dt * t)**2)
+
+    # With drag --------------------------------------------------------------------------------------------------------
     # Stop the integration when we hit the target.
     hit_target.terminal = True
     # We must be moving downwards (don't stop before we begin moving upwards!)
@@ -51,29 +70,33 @@ def run_projectile_resistance_demo(launch_angle, v0, h):
 
     # Retrieve the solution for the time grid
     sol = soln.sol(t)
-    x, y = sol[0], sol[2]
+    X_WD, Y_WD = sol[0], sol[1]
 
     # print(soln)
     print(f'Time to target = {soln.t_events[0][0]} s')
     print(f'Time to highest point = {soln.t_events[1][0]} s')
-    print(f'Range to target, xmax = {x[-1]} m')
-    print(f'Maximum height, zmax = {max(y)} m')
+    print(f'Range to target, xmax = {X_WD[-1]} m')
+    print(f'Maximum height, zmax = {max(Y_WD)} m')
 
     # plot the trajectory.
+    x = [X_ND, X_WD]
+    y = [Y_ND, Y_WD]
+
     plot(x, y)
 
 
 def deriv(t, u):
-    x, Vx, y, Vy = u
-    Vo = np.hypot(Vx, Vy)
-    ax = -k / m * Vo * Vx  # acceleration in x direction
-    ay = -k / m * Vo * Vy - G  # acceleration in y direction
-    return Vx, ax, Vy, ay
+    x, y, Vx, Vy = u
+
+    Vxy = np.hypot(Vx, Vy)
+    ax = -k / m * Vxy * Vx  # acceleration in x direction
+    ay = -k / m * Vxy * Vy - G  # acceleration in y direction
+    return Vx, Vy, ax, ay
 
 
 def hit_target(t, u):
     # We've hit the target if the z-coordinate is 0.
-    return u[2]
+    return u[1]
 
 
 def max_height(t, u):
@@ -83,7 +106,12 @@ def max_height(t, u):
 
 def plot(x, y):
     fig, ax1 = plt.subplots()
-    plt.plot(x, y)
+
+    if isinstance(x[0], list):
+        for i in range(len(x)):
+            plt.plot(x[i], y[i], label='id %s' % i)
+    else:
+        plt.plot(x, y)
 
     ax1.set_title('Projectile Demo with air resistance')
     ax1.set_xlabel('distance (m)')
