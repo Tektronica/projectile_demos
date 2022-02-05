@@ -11,8 +11,8 @@ m = 0.2  # mass (kg)
 
 Cd = 0.47  # drag coefficient of a sphere
 A = np.pi * r ** 2  # area (m^2)
-rho_air = 1.225  # Air density (kg.m-3) @ 15C standard atmospheric pressure
-rho_nitrogen = 0.0725  # Air density (kg.m-3) @ 15C standard atmospheric pressure
+rho_air = 1.205  # Air density (kg.m-3) @ NTP
+rho_hydrogen = 0.0899  # Air density (kg.m-3) @ STP
 
 
 def run_demo():
@@ -50,7 +50,7 @@ def run_projectile_resistance_demo(launch_angle, v0, h):
     X_WD = list()
     Y_WD = list()
 
-    for loop, rho in enumerate([rho_air, rho_nitrogen]):
+    for loop, rho in enumerate([rho_air, rho_hydrogen]):
         sol = iterative((x0, y0, Vx0, Vy0), dt, steps, rho)
 
         # Retrieve the solution and append
@@ -127,7 +127,7 @@ def plot(x, y):
     ax1.set_title('Projectile Demo with air resistance')
     ax1.set_xlabel('distance (m)')
     ax1.set_ylabel('height (m)')
-    ax1.legend(['$\\rho=0$', f'$\\rho={rho_air}$ (air)', f'$\\rho={rho_nitrogen}$ (nitrogen)'])
+    ax1.legend(['$\\rho=0$', f'$\\rho={rho_air}$ (air)', f'$\\rho={rho_hydrogen}$ (hydrogen)'])
 
     plt.grid()
     plt.show()
