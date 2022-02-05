@@ -11,16 +11,16 @@ import matplotlib.pyplot as plt
 # http://djm.cc/library/Differential_Equations_Phillips_edited.pdf
 # https://gamedev.stackexchange.com/a/149612
 
+# Physical constants
 G = 9.81  # acceleration due to gravity (m/s^2)
 
 r = 0.05  # projectile radius (m)
 m = 0.2  # mass (kg)
 
-Cd = 0.47  # drag coefficient
+Cd = 0.47  # drag coefficient of a sphere
 A = np.pi * r ** 2  # area (m^2)
-rho_air = 1.28  # Air density (kg.m-3)
-
-k = 0.5 * Cd * rho_air * A  # convenience constant.
+rho_air = 1.225  # Air density (kg.m-3) @ 15C standard atmospheric pressure
+rho_nitrogen = 0.0725  # Air density (kg.m-3) @ 15C standard atmospheric pressure
 
 
 def run_demo():
@@ -50,43 +50,52 @@ def run_projectile_resistance_demo(launch_angle, v0, h):
     dt = tf / steps
 
     # No drag ----------------------------------------------------------------------------------------------------------
-    X_ND = list()
-    Y_ND = list()
+    X_ND = []
+    Y_ND = []
 
     for t in range(steps + 1):
         X_ND.append(x0 + Vx0 * dt * t)
         Y_ND.append(y0 + Vy0 * dt * t - 0.5 * G * (dt * t)**2)
 
     # With drag --------------------------------------------------------------------------------------------------------
+    X_WD = []
+    Y_WD = []
+
     # Stop the integration when we hit the target.
     hit_target.terminal = True
     # We must be moving downwards (don't stop before we begin moving upwards!)
     hit_target.direction = -1
+    for loop, rho in enumerate([rho_air, rho_nitrogen]):
 
-    soln = solve_ivp(deriv, (t0, tf), u0, dense_output=True, events=(hit_target, max_height))
+        # scipy.integrate.solve_ivp(func, t_span, y0, args=() ...)
+        soln = solve_ivp(deriv, (t0, tf), u0, args=(rho,), dense_output=True, events=(hit_target, max_height))
 
-    # A fine grid of time points from 0 until impact time.
-    t = np.linspace(0, soln.t_events[0][0], 100)
+        # A fine grid of time points from 0 until impact time.
+        t = np.linspace(0, soln.t_events[0][0], steps)
 
-    # Retrieve the solution for the time grid
-    sol = soln.sol(t)
-    X_WD, Y_WD = sol[0], sol[1]
+        # Retrieve the solution and append
+        sol = soln.sol(t)
+        X_WD.append(sol[0])
+        Y_WD.append(sol[1])
 
-    # print(soln)
-    print(f'Time to target = {soln.t_events[0][0]} s')
-    print(f'Time to highest point = {soln.t_events[1][0]} s')
-    print(f'Range to target, xmax = {X_WD[-1]} m')
-    print(f'Maximum height, zmax = {max(Y_WD)} m')
+        # print(soln)
+        print(f'Density (rho) = {rho}')
+        print(f'Time to target = {soln.t_events[0][0]} s')
+        print(f'Time to highest point = {soln.t_events[1][0]} s')
+        print(f'Range to target, xmax = {X_WD[loop][-1]} m')
+        print(f'Maximum height, zmax = {max(Y_WD[loop])} m')
+        print()
 
     # plot the trajectory.
-    x = [X_ND, X_WD]
-    y = [Y_ND, Y_WD]
+    x = [X_ND] + X_WD
+    y = [Y_ND] + Y_WD
 
     plot(x, y)
 
 
-def deriv(t, u):
+def deriv(t, u, rho):
     x, y, Vx, Vy = u
+    k = 0.5 * Cd * rho * A  # convenience constant
 
     Vxy = np.hypot(Vx, Vy)
     ax = -k / m * Vxy * Vx  # acceleration in x direction
@@ -94,12 +103,12 @@ def deriv(t, u):
     return Vx, Vy, ax, ay
 
 
-def hit_target(t, u):
+def hit_target(t, u, *args):
     # We've hit the target if the z-coordinate is 0.
     return u[1]
 
 
-def max_height(t, u):
+def max_height(t, u, *args):
     # The maximum height is obtained when the y-velocity is zero.
     return u[3]
 
@@ -116,6 +125,7 @@ def plot(x, y):
     ax1.set_title('Projectile Demo with air resistance')
     ax1.set_xlabel('distance (m)')
     ax1.set_ylabel('height (m)')
+    ax1.legend(['$\\rho=0$', f'$\\rho={rho_air}$ (air)', f'$\\rho={rho_nitrogen}$ (nitrogen)'])
 
     plt.grid()
     plt.show()

@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+
 # https://physics.stackexchange.com/a/134863
 
 # Physical constants
@@ -8,11 +9,10 @@ G = 9.81  # acceleration due to gravity (m/s^2)
 r = 0.05  # projectile radius (m)
 m = 0.2  # mass (kg)
 
-Cd = 0.47  # drag coefficient
+Cd = 0.47  # drag coefficient of a sphere
 A = np.pi * r ** 2  # area (m^2)
-rho_air = 1.28
-
-k = 0.5 * Cd * rho_air * A  # convenience constant.
+rho_air = 1.225  # Air density (kg.m-3) @ 15C standard atmospheric pressure
+rho_nitrogen = 0.0725  # Air density (kg.m-3) @ 15C standard atmospheric pressure
 
 
 def run_demo():
@@ -35,7 +35,7 @@ def run_projectile_resistance_demo(launch_angle, v0, h):
 
     # Interval of integration by iteration up to tf
     steps = 1000
-    tf = (Vy0 + np.sqrt(Vy0**2 + 2*G*h)) / G  # time of flight
+    tf = (Vy0 + np.sqrt(Vy0 ** 2 + 2 * G * h)) / G  # time of flight
     dt = tf / steps
 
     # No drag ----------------------------------------------------------------------------------------------------------
@@ -44,55 +44,76 @@ def run_projectile_resistance_demo(launch_angle, v0, h):
 
     for t in range(steps + 1):
         X_ND.append(x0 + Vx0 * dt * t)
-        Y_ND.append(y0 + Vy0 * dt * t - 0.5 * G * (dt * t)**2)
+        Y_ND.append(y0 + Vy0 * dt * t - 0.5 * G * (dt * t) ** 2)
 
     # With drag --------------------------------------------------------------------------------------------------------
     X_WD = list()
     Y_WD = list()
-    Vx_WD = list()
-    Vy_WD = list()
 
-    X_WD.append(x0)
-    Y_WD.append(y0)
-    Vx_WD.append(Vx0)
-    Vy_WD.append(Vy0)
+    for loop, rho in enumerate([rho_air, rho_nitrogen]):
+        sol = iterative((x0, y0, Vx0, Vy0), dt, steps, rho)
 
-    stop = 0 # stop condition flag to end for loop
+        # Retrieve the solution and append
+        X_WD.append(sol[0])
+        Y_WD.append(sol[1])
+        tof = sol[4]
+        ttm = sol[5]
+
+        print(f'Time to target = {tof} s')
+        print(f'Time to highest point = {ttm} s')
+        print(f'Range to target, xmax = {X_WD[-1]} m')
+        print(f'Maximum height, zmax = {max(Y_WD[loop])} m')
+
+    # Plot results
+    x = [X_ND] + X_WD
+    y = [Y_ND] + Y_WD
+
+    plot(x, y)
+
+
+def iterative(u0, dt, steps, rho):
+    x0, y0, Vx0, Vy0 = u0
+
+    x = list()
+    y = list()
+    Vx = list()
+    Vy = list()
+
+    x.append(x0)
+    y.append(y0)
+    Vx.append(Vx0)
+    Vy.append(Vy0)
+
+    stop = 0  # stop condition flag to end for loop
     tof = 0  # time of flight
     ttm = 0  # time to max
     last_smallest_Vy = 1e05
+
+    k = 0.5 * Cd * rho * A  # convenience constant
+
     for t in range(1, steps + 1):
         if stop != 1:
-            Vxy = np.hypot(Vx_WD[t - 1], Vy_WD[t - 1])
+            Vxy = np.hypot(Vx[t - 1], Vy[t - 1])
 
             # First calculate velocity
-            Vx_WD.append(Vx_WD[t - 1] * (1.0 - k/m * Vxy * dt))
-            Vy_WD.append(Vy_WD[t - 1] + (- G - k/m * Vy_WD[t - 1] * Vxy) * dt)
+            Vx.append(Vx[t - 1] * (1.0 - k / m * Vxy * dt))
+            Vy.append(Vy[t - 1] + (- G - k / m * Vy[t - 1] * Vxy) * dt)
 
             # Now calculate position
-            X_WD.append(X_WD[t - 1] + Vx_WD[t - 1] * dt)
-            Y_WD.append(Y_WD[t - 1] + Vy_WD[t - 1] * dt)
+            x.append(x[t - 1] + Vx[t - 1] * dt)
+            y.append(y[t - 1] + Vy[t - 1] * dt)
 
             # log event - reached highest point why Vy=0 (note: discrete dt step misses 0.0)
-            if np.abs(Vy_WD[t]) < last_smallest_Vy:
-                last_smallest_Vy = Vy_WD[t]
-                ttm = t*dt
+            if np.abs(Vy[t]) < last_smallest_Vy:
+                last_smallest_Vy = Vy[t]
+                ttm = t * dt
 
             # stop event - hit target
-            if Y_WD[t] <= 0.0:
-                tof = t*dt
+            if y[t] <= 0.0:
+                tof = t * dt
                 stop = 1
 
-    print(f'Time to target = {tof} s')
-    print(f'Time to highest point = {ttm} s')
-    print(f'Range to target, xmax = {X_WD[-1]} m')
-    print(f'Maximum height, ymax = {max(Y_WD)} m')
-
-    # Plot results
-    x = [X_ND, X_WD]
-    y = [Y_ND, Y_WD]
-
-    plot(x, y)
+    return x, y, Vx, Vy, tof, ttm
 
 
 def plot(x, y):
@@ -106,6 +127,7 @@ def plot(x, y):
     ax1.set_title('Projectile Demo with air resistance')
     ax1.set_xlabel('distance (m)')
     ax1.set_ylabel('height (m)')
+    ax1.legend(['$\\rho=0$', f'$\\rho={rho_air}$ (air)', f'$\\rho={rho_nitrogen}$ (nitrogen)'])
 
     plt.grid()
     plt.show()
