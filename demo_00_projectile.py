@@ -6,11 +6,11 @@ G = 9.81  # m/s^2
 
 def run_demo():
     # velocity initial is tangential to the
-    Vo = 10  # m/s
+    launch_velocity = 10  # m/s
     launch_angle = 45  # deg
     launch_height = 2  # m
 
-    run_projectile_demo(launch_height, launch_angle, Vo)
+    run_projectile_demo(launch_height, launch_angle, launch_velocity)
 
 
 def run_projectile_demo(h, theta, Vo):
