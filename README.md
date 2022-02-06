@@ -10,7 +10,7 @@
 7. [Projectile with air resistance using iterative method](#projectile-with-air-resistance-using-iterative-method)
 8. [Projectile with air resistance using ODE scipy method](#projectile-with-air-resistance-using-ODE-scipy-method)
 9. [Projectile with air resistance to target](#projectile-with air-resistance-to-target)
-10. 
+
 ## Introduction
 
 This repository is a collection of demo scripts that analyze various concepts concerning projectiles both with and
