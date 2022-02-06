@@ -19,9 +19,6 @@ def run_demo():
 
 
 def get_launch_angle(V0, h, xfinal, yfinal):
-    if h == 0 and yfinal == 0:
-        return np.rad2deg(.5 * np.arcsin(xfinal * (G / V0 ** 2)))
-    else:
         return np.rad2deg(np.arctan((V0 ** 2 + np.sqrt(V0 ** 4 - G * (G * xfinal ** 2 + (2 * (yfinal - h) * (V0 ** 2))))) / (G * xfinal)))
 
 

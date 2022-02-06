@@ -27,14 +27,19 @@ The standard projectile equation is used to find the launch angle given a fixed 
 This example contends with a fixed muzzle velocity to adjust the launch angle to achieve the appropriate distance. Note,
 however the maximum distance achieved by a fixed velocity launch is at 45 degrees.
 
-![trajectory](https://latex.codecogs.com/svg.image?\bg_white&space;y&space;=&space;y_0&space;&plus;&space;tan(\theta_{i})&space;x&space;-&space;\frac{g}{2V_{0}^2cos(\theta_{i})}x&space;^2)
+<!-- \theta_{i}=tan^{-1} \left(\frac{V_{0}^{2} + \sqrt{V_{0}^{4} - g(g x_{final}^2 + 2(y_{final} - y_{0})V_{0}^{2})}}{g x_{final}}\right) -->
+![find launch angle with fixed velocity](https://latex.codecogs.com/svg.image?\bg_white&space;\theta_{i}=tan^{-1}&space;\left(\frac{V_{0}^{2}&space;&plus;&space;\sqrt{V_{0}^{4}&space;-&space;g(g&space;x_{final}^2&space;&plus;&space;2(y_{final}&space;-&space;y_{0})V_{0}^{2})}}{g&space;x_{final}}\right))
 
 ## Projectile given target angle and distance
 
 The standard projectile equation is used to find the launch angle and velocity given the target distance and angle. This
 example maximizes the angle of attack (AoA) to the target to minimize bounce or to shoot through a hoop.
 
-![trajectory](https://latex.codecogs.com/svg.image?\bg_white&space;y&space;=&space;y_0&space;&plus;&space;tan(\theta_{i})&space;x&space;-&space;\frac{g}{2V_{0}^2cos(\theta_{i})}x&space;^2)
+<!-- \theta_{i} = tan^{-1}\left(\frac{-x_{final}tan(\theta_{final}) - 2(y_{0} + y_{final})}{x_{final}}\right) -->
+![find launch angle given target angle](https://latex.codecogs.com/svg.image?\bg_white&space;\theta_{i}&space;=&space;tan^{-1}\left(\frac{-x_{final}tan(\theta_{final})&space;-&space;2(y_{0}&space;&plus;&space;y_{final})}{x_{final}}\right))
+
+<!-- \frac{1}{cos(\theta_{i})} \sqrt{\frac{g x_{final}}{tan(\theta_{i}) - tan(\theta_{final})}} -->
+![find launch velocity given target angle](https://latex.codecogs.com/svg.image?\bg_white&space;\frac{1}{cos(\theta_{i})}&space;\sqrt{\frac{g&space;x_{final}}{tan(\theta_{i})&space;-&space;tan(\theta_{final})}})
 
 ## Projectile given max height
 
