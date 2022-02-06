@@ -59,13 +59,81 @@ a max ceiling. This example limits the height of the trajectory to avoid a ceili
 
 This demo introduces the mass of the projectile, which requires the exit velocity. This example provides an initial pressure of an air cannon. 
 
-![trajectory](https://latex.codecogs.com/svg.image?\bg_white&space;y&space;=&space;y_0&space;&plus;&space;tan(\theta_{i})&space;x&space;-&space;\frac{g}{2V_{0}^2cos(\theta_{i})}x&space;^2)
-
 ## Projectile with air resistance using iterative method
 
 This demo introduces air resistance affecting the trajectory of the projectile. The path is plotted using an iterative loop to solve the ODE system of equations.
 
-![trajectory](https://latex.codecogs.com/svg.image?\bg_white&space;y&space;=&space;y_0&space;&plus;&space;tan(\theta_{i})&space;x&space;-&space;\frac{g}{2V_{0}^2cos(\theta_{i})}x&space;^2)
+<!-- 
+\frac{\mathrm{d} }{\mathrm{d} x}
+\begin{pmatrix}
+x\\y\\V_{x}\\V_{y}
+\end{pmatrix}
+=
+\begin{pmatrix}
+\begin{array}{l}
+V_{x}\\V_{y}\\-{\mu}V_{x}\sqrt{V_{x}^2+V_{y}^2}\\-{\mu}V_{y}\sqrt{V_{x}^2+V_{y}^2}-g\end{pmatrix}
+\end{array} 
+=
+\begin{pmatrix}
+\begin{array}{l}
+V_{x}\\V_{y}\\-{\mu}V_{x}V_{0}\\-{\mu}V_{y}V_{0}-g
+\end{array}
+\end{array}
+-->
+![find launch velocity given target angle](https://latex.codecogs.com/svg.image?\frac{\mathrm{d}&space;}{\mathrm{d}&space;x}\begin{pmatrix}x\\y\\V_{x}\\V_{y}\end{pmatrix}=\begin{pmatrix}\begin{array}{l}V_{x}\\V_{y}\\-{\mu}V_{x}\sqrt{V_{x}^2&plus;V_{y}^2}\\-{\mu}V_{y}\sqrt{V_{x}^2&plus;V_{y}^2}-g\end{pmatrix}\end{array}&space;=\begin{pmatrix}\begin{array}{l}V_{x}\\V_{y}\\-{\mu}V_{x}V_{0}\\-{\mu}V_{y}V_{0}-g\end{array}\end{array}&space;)
+
+<!-- 
+\begin{matrix}
+{\mu}=\frac{k}{m}&\text{and}&k=\frac{1}{2}C_{d}{\rho}_{air}A\\
+\end{matrix}
+-->
+![find launch velocity given target angle](https://latex.codecogs.com/svg.image?\begin{matrix}{\mu}=\frac{k}{m}&\text{and}&k=\frac{1}{2}C_{d}{\rho}_{air}A\\\end{matrix})
+
+
+    def iterative(u0, dt, steps, rho):
+        x0, y0, Vx0, Vy0 = u0
+
+        x = list()
+        y = list()
+        Vx = list()
+        Vy = list()
+    
+        x.append(x0)
+        y.append(y0)
+        Vx.append(Vx0)
+        Vy.append(Vy0)
+    
+        stop = 0  # stop condition flag to end for loop
+        tof = 0  # time of flight
+        ttm = 0  # time to max
+        last_smallest_Vy = 1e05
+    
+        k = 0.5 * Cd * rho * A  # convenience constant
+    
+        for t in range(1, steps + 1):
+            if stop != 1:
+                Vxy = np.hypot(Vx[t - 1], Vy[t - 1])
+    
+                # First calculate velocity
+                Vx.append(Vx[t - 1] * (1.0 - k / m * Vxy * dt))
+                Vy.append(Vy[t - 1] + (- G - k / m * Vy[t - 1] * Vxy) * dt)
+    
+                # Now calculate position
+                x.append(x[t - 1] + Vx[t - 1] * dt)
+                y.append(y[t - 1] + Vy[t - 1] * dt)
+    
+                # log event - reached highest point why Vy=0 (note: discrete dt step misses 0.0)
+                if np.abs(Vy[t]) < last_smallest_Vy:
+                    last_smallest_Vy = Vy[t]
+                    ttm = t * dt
+    
+                # stop event - hit target
+                if y[t] <= 0.0:
+                    tof = t * dt
+                    stop = 1
+    
+        return x, y, Vx, Vy, tof, ttm
+
 
 ## Projectile with air resistance using ODE scipy method
 
