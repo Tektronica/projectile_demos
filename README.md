@@ -63,26 +63,10 @@ This demo introduces the mass of the projectile, which requires the exit velocit
 
 This demo introduces air resistance affecting the trajectory of the projectile. The path is plotted using an iterative loop to solve the ODE system of equations.
 
-<!--\frac{\mathrm{d} }{\mathrm{d} x}
-\begin{pmatrix}
-x\\y\\V_{x}\\V_{y}
-\end{pmatrix}
-=
-\begin{pmatrix}
-\begin{array}{l}
-V_{x}\\V_{y}\\-{\mu}V_{x}\sqrt{V_{x}^2+V_{y}^2}\\-{\mu}V_{y}\sqrt{V_{x}^2+V_{y}^2}-g\end{pmatrix}
-\end{array} 
-=
-\begin{pmatrix}
-\begin{array}{l}
-V_{x}\\V_{y}\\-{\mu}V_{x}V_{0}\\-{\mu}V_{y}V_{0}-g
-\end{array}
-\end{array}-->
+
 ![find launch velocity given target angle](https://latex.codecogs.com/svg.image?\frac{\mathrm{d}&space;}{\mathrm{d}&space;x}\begin{pmatrix}x\\y\\V_{x}\\V_{y}\end{pmatrix}=\begin{pmatrix}\begin{array}{l}V_{x}\\V_{y}\\-{\mu}V_{x}\sqrt{V_{x}^2&plus;V_{y}^2}\\-{\mu}V_{y}\sqrt{V_{x}^2&plus;V_{y}^2}-g\end{pmatrix}\end{array}&space;=\begin{pmatrix}\begin{array}{l}V_{x}\\V_{y}\\-{\mu}V_{x}V_{0}\\-{\mu}V_{y}V_{0}-g\end{array}\end{array}&space;)
 
-<!--\begin{matrix}
-{\mu}=\frac{k}{m}&\text{and}&k=\frac{1}{2}C_{d}{\rho}_{air}A\\
-\end{matrix}-->
+
 ![find launch velocity given target angle](https://latex.codecogs.com/svg.image?\begin{matrix}{\mu}=\frac{k}{m}&\text{and}&k=\frac{1}{2}C_{d}{\rho}_{air}A\\\end{matrix})
 
 
