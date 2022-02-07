@@ -64,25 +64,33 @@ This demo introduces the mass of the projectile, which requires the exit velocit
 This demo introduces air resistance affecting the trajectory of the projectile. The path is plotted using an iterative loop to solve the ODE system of equations.
 
 <!--
-\frac{\mathrm{d} }{\mathrm{d} x}
+\frac{\mathrm{d}}{\mathrm{d}x}
 \begin{pmatrix}
- x \\ y \\ V_{x} \\ V_{y} 
+ x\\
+ y\\
+ V_{x}\\
+ V_{y}
 \end{pmatrix}
 =
-\begin{pmatrix}\begin{array}
- {l}V_{x} \\ V_{y} \\-{\mu}V_{x}\sqrt{V_{x}^2+V_{y}^2} \\ -{\mu}V_{y}\sqrt{V_{x}^2+V_{y}^2}-g 
+\begin{pmatrix}
+\begin{array}{l}
+ V_{x}\\
+ V_{y}\\
+ -{\mu}V_{x}\sqrt{V_{x}^2+V_{y}^2}\\
+ -{\mu}V_{y}\sqrt{V_{x}^2+V_{y}^2}-g
 \end{array}
 \end{pmatrix}
 =
 \begin{pmatrix}
-\begin{array}
- {l}V_{x} \\ V_{y} \\ -{\mu}V_{x}V_{0} \\ -{\mu}V_{y}V_{0}-g 
+\begin{array}{l}
+ V_{x}\\
+ V_{y}\\
+ -{\mu}V_{x}V_{0}\\
+ -{\mu}V_{y}V_{0}-g
 \end{array}
 \end{pmatrix}
 -->
-![find launch velocity given target angle](https://latex.codecogs.com/svg.image?\bg_white&space;\frac{\mathrm{d}&space;}{\mathrm{d}&space;x}\begin{pmatrix}&space;x&space;\\&space;y&space;\\&space;V_{x}&space;\\&space;V_{y}&space;\end{pmatrix}=\begin{pmatrix}\begin{array}&space;{l}V_{x}&space;\\&space;V_{y}&space;\\-{\mu}V_{x}\sqrt{V_{x}^2&plus;V_{y}^2}&space;\\&space;-{\mu}V_{y}\sqrt{V_{x}^2&plus;V_{y}^2}-g&space;\end{array}\end{pmatrix}=\begin{pmatrix}\begin{array}&space;{l}V_{x}&space;\\&space;V_{y}&space;\\&space;-{\mu}V_{x}V_{0}&space;\\&space;-{\mu}V_{y}V_{0}-g&space;\end{array}\end{pmatrix})
-
-![test](https://latex.codecogs.com/svg.image?\begin{pmatrix}&space;1\\&space;1\\&space;1\\&space;1\end{pmatrix}=\begin{pmatrix}&space;1\\&space;1\\&space;1\\&space;1\end{pmatrix})
+![find launch velocity given target angle](https://latex.codecogs.com/svg.image?\bg_white&space;\frac{\mathrm{d}&space;}{\mathrm{d}&space;x}\begin{pmatrix}&space;x&space;\\\\&space;y&space;\\\\&space;V_{x}&space;\\\\&space;V_{y}&space;\end{pmatrix}=\begin{pmatrix}\begin{array}&space;{l}V_{x}&space;\\\\&space;V_{y}&space;\\\\-{\mu}V_{x}\sqrt{V_{x}^2&plus;V_{y}^2}&space;\\\\&space;-{\mu}V_{y}\sqrt{V_{x}^2&plus;V_{y}^2}-g&space;\end{array}\end{pmatrix}=\begin{pmatrix}\begin{array}&space;{l}V_{x}&space;\\\\&space;V_{y}&space;\\\\&space;-{\mu}V_{x}V_{0}&space;\\\\&space;-{\mu}V_{y}V_{0}-g&space;\end{array}\end{pmatrix})
 
 <!--
 \begin{matrix}{\mu}=\frac{k}{m}
