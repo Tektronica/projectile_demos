@@ -151,6 +151,79 @@ This demo improves on the previous section by using the scipy built-in function 
 
 ![trajectory](https://latex.codecogs.com/svg.image?\bg_white&space;y&space;=&space;y_0&space;&plus;&space;tan(\theta_{i})&space;x&space;-&space;\frac{g}{2V_{0}^2cos(\theta_{i})}x&space;^2)
 
+    def run_projectile_resistance_demo(launch_angle, v0, h):
+        phi0 = np.radians(launch_angle)
+        rho = rho_air
+
+        # Initial conditions
+        x0 = 0.
+        y0 = h
+        Vx0 = v0 * np.cos(phi0)
+        Vy0 = v0 * np.sin(phi0)
+    
+        u0 = x0, y0, Vx0, Vy0
+    
+        # Interval of integration by ODE method up to tf
+        t0 = 0
+        tf = (Vy0 + np.sqrt(Vy0**2 + 2*G*h)) / G  # time of flight
+        steps = 1000
+        dt = tf / steps
+    
+        # No drag (ND) -------------------------------------------------------------------------------------------------
+        X_ND = []
+        Y_ND = []
+    
+        for t in range(steps + 1):
+            X_ND.append(x0 + Vx0 * dt * t)
+            Y_ND.append(y0 + Vy0 * dt * t - 0.5 * G * (dt * t)**2)
+    
+        # With drag (WD) -----------------------------------------------------------------------------------------------
+        X_WD = []
+        Y_WD = []
+    
+        # Stop the integration when we hit the target.
+        hit_target.terminal = True
+        # We must be moving downwards (don't stop before we begin moving upwards!)
+        hit_target.direction = -1
+    
+        # scipy.integrate.solve_ivp(func, t_span, y0, args=() ...)
+        soln = solve_ivp(deriv, (t0, tf), u0, args=(rho,), dense_output=True, events=(hit_target, max_height))
+
+        # A fine grid of time points from 0 until impact time.
+        t = np.linspace(0, soln.t_events[0][0], steps)
+
+        # Retrieve the solution and append
+        sol = soln.sol(t)
+        X_WD = sol[0]
+        Y_WD = sol[2]
+    
+        # plot the trajectories.
+        x = [X_ND, X_WD]
+        y = [Y_ND, Y_WD]
+    
+        plot(x, y)
+    
+    
+    def deriv(t, u, rho):
+        x, y, Vx, Vy = u
+        k = 0.5 * Cd * rho * A  # convenience constant
+    
+        Vxy = np.hypot(Vx, Vy)
+        ax = -k / m * Vxy * Vx  # acceleration in x direction
+        ay = -k / m * Vxy * Vy - G  # acceleration in y direction
+        return Vx, Vy, ax, ay
+    
+    
+    def hit_target(t, u, *args):
+        # We've hit the target if the z-coordinate is 0.
+        return u[1]
+    
+    
+    def max_height(t, u, *args):
+        # The maximum height is obtained when the y-velocity is zero.
+        return u[3]
+
+
 ## Projectile with air resistance to target
 
 This demo brings all the concepts together in order to solve the launch angle of a trajectory for a projectile to reach its target while factoring air resistance. Since a closed form solution does not exist, the secant method is used to algorithmically resolve the roots of the ODE system of equations.
