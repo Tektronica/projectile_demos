@@ -66,27 +66,30 @@ This demo introduces air resistance affecting the trajectory of the projectile. 
 <!--
 \frac{\mathrm{d} }{\mathrm{d} x}
 \begin{pmatrix}
-x\\y\\V_{x}\\V_{y}
+ x \\ y \\ V_{x} \\ V_{y} 
+\end{pmatrix}
+=
+\begin{pmatrix}\begin{array}
+ {l}V_{x} \\ V_{y} \\-{\mu}V_{x}\sqrt{V_{x}^2+V_{y}^2} \\ -{\mu}V_{y}\sqrt{V_{x}^2+V_{y}^2}-g 
+\end{array}
 \end{pmatrix}
 =
 \begin{pmatrix}
-\begin{array}{l}
-V_{x}\\V_{y}\\-{\mu}V_{x}\sqrt{V_{x}^2+V_{y}^2}\\-{\mu}V_{y}\sqrt{V_{x}^2+V_{y}^2}-g
-\end{array} 
-\end{pmatrix}
-=
-\begin{pmatrix}
-\begin{array}{l}
-V_{x}\\V_{y}\\-{\mu}V_{x}V_{0}\\-{\mu}V_{y}V_{0}-g
+\begin{array}
+ {l}V_{x} \\ V_{y} \\ -{\mu}V_{x}V_{0} \\ -{\mu}V_{y}V_{0}-g 
 \end{array}
 \end{pmatrix}
 -->
-![find launch velocity given target angle](https://latex.codecogs.com/svg.image?\bg_white&space;\frac{\mathrm{d}&space;}{\mathrm{d}&space;x}\begin{pmatrix}x\\y\\V_{x}\\V_{y}\end{pmatrix}=\begin{pmatrix}\begin{array}{l}V_{x}\\V_{y}\\-{\mu}V_{x}\sqrt{V_{x}^2&plus;V_{y}^2}\\-{\mu}V_{y}\sqrt{V_{x}^2&plus;V_{y}^2}-g\end{array}&space;\end{pmatrix}=\begin{pmatrix}\begin{array}{l}V_{x}\\V_{y}\\-{\mu}V_{x}V_{0}\\-{\mu}V_{y}V_{0}-g\end{array}\end{pmatrix})
+![find launch velocity given target angle](https://latex.codecogs.com/svg.image?\bg_white&space;\frac{\mathrm{d}&space;}{\mathrm{d}&space;x}\begin{pmatrix}&space;x&space;\\&space;y&space;\\&space;V_{x}&space;\\&space;V_{y}&space;\end{pmatrix}=\begin{pmatrix}\begin{array}&space;{l}V_{x}&space;\\&space;V_{y}&space;\\-{\mu}V_{x}\sqrt{V_{x}^2&plus;V_{y}^2}&space;\\&space;-{\mu}V_{y}\sqrt{V_{x}^2&plus;V_{y}^2}-g&space;\end{array}\end{pmatrix}=\begin{pmatrix}\begin{array}&space;{l}V_{x}&space;\\&space;V_{y}&space;\\&space;-{\mu}V_{x}V_{0}&space;\\&space;-{\mu}V_{y}V_{0}-g&space;\end{array}\end{pmatrix})
 
-<!--\begin{matrix}
-{\mu}=\frac{k}{m}&\text{and}&k=\frac{1}{2}C_{d}{\rho}_{air}A\\
-\end{matrix}-->
-![find launch velocity given target angle](https://latex.codecogs.com/svg.image?\begin{matrix}{\mu}=\frac{k}{m}&\text{and}&k=\frac{1}{2}C_{d}{\rho}_{air}A\\\end{matrix})
+![test](https://latex.codecogs.com/svg.image?\begin{pmatrix}&space;1\\&space;1\\&space;1\\&space;1\end{pmatrix}=\begin{pmatrix}&space;1\\&space;1\\&space;1\\&space;1\end{pmatrix})
+
+<!--
+\begin{matrix}{\mu}=\frac{k}{m}
+ &\text{and}&k=\frac{1}{2}C_{d}{\rho}_{air}A\\ 
+\end{matrix}
+-->
+![find launch velocity given target angle](https://latex.codecogs.com/svg.image?\bg_white&space;\begin{matrix}{\mu}=\frac{k}{m}&space;&\text{and}&k=\frac{1}{2}C_{d}{\rho}_{air}A\\&space;\end{matrix})
 
 
     def iterative(u0, dt, steps, rho):
