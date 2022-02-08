@@ -57,7 +57,13 @@ a max ceiling. This example limits the height of the trajectory to avoid a ceili
 
 ## Calculating Exit Velocity
 
-This demo introduces the mass of the projectile, which requires the exit velocity. This example provides an initial pressure of an air cannon. 
+This demo introduces the mass of the projectile, which requires the exit velocity. This example provides an initial pressure of an air cannon. Currently, the model is over-simplified by not accounting for the flow rate of air through the valve connecting the reservoir and barrel. While the gas from a pressurized reservoir expands isothermally, adiabatic model produces a similar result since the temperature drop associated with the adiabatic expansion is so small.
+
+<!-- v_{ab}={\sqrt{\frac{2}{m}\left(\frac{P_{0}V_{0}}{{\gamma} - 1}\left(1 - \left(\frac{V_{0}}{V_{0} + Ax}\right)^{{\gamma} - 1}\right) - xAP_{atm} - xF_{friction}\right)}}  -->
+![exit velocity under adiabatic expansion](https://latex.codecogs.com/png.image?\dpi{110}%20\bg_white%20v_{ab}={\sqrt{\frac{2}{m}\left(\frac{P_{0}V_{0}}{{\gamma}%20-%201}\left(1%20-%20\left(\frac{V_{0}}{V_{0}%20+%20Ax}\right)^{{\gamma}%20-%201}\right)%20-%20xAP_{atm}%20-%20xF_{friction}\right)}})
+
+<!-- v_{iso}={\sqrt{\frac{2}{m}\left(P_{0}V_{0}\ln{\left(1+\frac{xA}{V_{0}}\right)} - xAP_{atm} - xF_{friction}\right)}} -->
+![exit velocity under isothermal expansion](https://latex.codecogs.com/png.image?\dpi{110}%20\bg_white%20v_{iso}={\sqrt{\frac{2}{m}\left(P_{0}V_{0}\ln{\left(1+\frac{xA}{V_{0}}\right)}%20-%20xAP_{atm}%20-%20xF_{friction}\right)}})
 
 ## Projectile with air resistance using iterative method
 
