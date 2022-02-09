@@ -63,7 +63,7 @@ def run_demo():
     x0 = 0
     v0 = 0
     xc, yc, pc = exit_velocity_corrected_ode(x0, v0, V0, Pt0, Patm, A, d, m, rmax)  # x0, v0, V0, P0, Patm, A, d
-    yc_p = exit_velocity_corrected(L, v0, V0, Px, Patm, A, d, m, rmax)  # x0, v0, V0, P0, Patm, A, d
+    yc_p = exit_velocity_corrected(L, x0, v0, V0, Px, Patm, A, d, m, rmax)  # x0, v0, V0, P0, Patm, A, d
 
     # PLOT RESULTS -----------------------------------------------------------------------------------------------------
     plot([x, x, xc], [yad_x, yiso_x, yc], [Px, Px, Px], [yad_p, yiso_p, yc_p])  # [x], [y] , [x2], [y2]
@@ -90,15 +90,28 @@ def get_root_isothermal(x, V0, A, Patm, Ff):
     return (x * (A * Patm + Ff)) / (V0 * np.log((A * x) / V0 + 1))
 
 
-def exit_velocity_corrected(x0, v0, V0, Px, Patm, A, d, m, rmax):
+def exit_velocity_corrected(L, x0, v0, V0, Px, Patm, A, d, m, rmax):
     # the corrected model takes into account the flow rate of air through the valve.
     ycp = []
+    x = x0
+    v = v0
+
+    # Interval of integration by ODE method up to tf -------------------------------------------------------------------
+    t0 = 0
+    tf = 0.04
+    steps = 1000
+    dt = tf / steps
+
     for P in Px:
         N0 = P * V0 / (K * T)  # initial number of molecules in the tank
         Nb0 = Patm * A * d / (K * T)  # initial number of molecules in the barrel
         Pb0 = Patm  # initial barrel pressure
 
-        v, *_ = deriv(0, (x0, v0, N0, Nb0, P, Pb0), V0, Patm, A, d, m, rmax)
+        x, v, Nt, Nb, Pt, Pb = x0, v0, N0, Nb0, P, Pb0
+
+        while x <= L:
+            u0 = x, v, Nt, Nb, Pt, Pb
+            x, v, Nt, Nb, Pt, Pb = [x * dt for x in deriv(0, u0, V0, Patm, A, d, m, rmax)]
 
         ycp.append(v)
 
@@ -168,7 +181,7 @@ def deriv(t, u, *args):
     dNt = -Q  # Tank Molecules number Differential
     dNbt = Q  # Barrel Molecules Number Differential
     dPt = -Q * K * T / V0  # Tank Pressure Differential
-    dPb = Q * K * T / (A * (d + x + v))  # Barrel Pressure Differential
+    dPb = Q * K * T / (A * (d + x))  # Barrel Pressure Differential
 
     return v, a, dNt, dNbt, dPt, dPb
 
@@ -191,7 +204,7 @@ def plot(x1, y1, x2, y2):
         ax1.plot(x1[i] * 1e2, y1[i])
 
     ax1.grid()
-    ax1.set_title('Exit Velocity as a function of barrel travel length')
+    ax1.set_title('Exit Velocity as a function of barrel travel length (200 kPa)')
     ax1.set_xlabel('barrel length (travelled) (cm)')
     ax1.set_ylabel('v (m/s)')
     ax1.legend(['adiabatic', 'isothermal', 'corrected'])
@@ -200,7 +213,7 @@ def plot(x1, y1, x2, y2):
         ax2.plot(x2[i] * 1e-3, y2[i])
 
     ax2.grid()
-    ax2.set_title('Exit Velocity as a function of the initial pressure')
+    ax2.set_title('Exit Velocity as a function of the initial pressure (L = 88 cm)')
     ax2.set_xlabel('initial pressure of air reservoir $P_0 (m)$')
     ax2.set_ylabel('v (m/s)')
 
