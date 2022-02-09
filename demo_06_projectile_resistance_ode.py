@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 # https://en.wikipedia.org/wiki/Ordinary_differential_equation
 # https://github.com/rossant/awesome-math/#ordinary-differential-equations
 # http://djm.cc/library/Differential_Equations_Phillips_edited.pdf
+# https://physics.stackexchange.com/a/127994
 # https://gamedev.stackexchange.com/a/149612
 
 # Physical constants
@@ -68,6 +69,7 @@ def run_projectile_resistance_demo(launch_angle, v0, h):
     for loop, rho in enumerate([rho_air, rho_hydrogen]):
 
         # scipy.integrate.solve_ivp(func, t_span, y0, args=() ...)
+        # each event occurs at the zeros of a continuous function of time and state
         soln = solve_ivp(deriv, (t0, tf), u0, args=(rho,), dense_output=True, events=(hit_target, max_height))
 
         # A fine grid of time points from 0 until impact time.
@@ -104,7 +106,7 @@ def deriv(t, u, rho):
 
 
 def hit_target(t, u, *args):
-    # We've hit the target if the z-coordinate is 0.
+    # We've hit the target if the y-coordinate is 0.
     return u[1]
 
 
