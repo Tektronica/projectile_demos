@@ -108,6 +108,40 @@ Consequently, the system of differential equations to resolve the exit velocity 
 
 ![Exit Velocity](images/demo_04_exit_velocity.png)
 
+    def get_Q(Pt, Pb, rmax):
+        # REGIME SELECTION -------->
+        # the molecular flow rate Q through the valve is a function of the ratio
+        r = (Pt - Pb) / Pt
+    
+        if r <= rmax:
+            # non-choked regime
+            Q = B * Pt * Cv * (1 - (r / (3 * rmax))) * np.sqrt(r / (Gg * T * Z))
+        else:
+            # choked regime
+            Q = (2 / 3) * B * Pt * Cv * np.sqrt(rmax / (Gg * T * Z))
+    
+        return Q
+    
+    
+    def deriv(t, u, *args):
+        # STATE VARIABLES  -------->
+        x, v, Nt, Nb = u
+    
+        # CONSTANTS --------> 
+        V0, Patm, A, d, m, rmax = args
+    
+        # FLOW RATE --------> 
+        Pt = (Nt * K * T) / V0  # Tank Pressure
+        Pb = (Nb * K * T) / (A * (d + x))  # Barrel Pressure
+        Q = get_Q(Pt, Pb, rmax)
+    
+        # SYSTEM OF DIFFERENTIAL EQUATIONS --------> 
+        a = A * (Pb - Patm) / m  # acceleration [m/s^2] F = ma --> AP(t) = ma
+        dNt = -Q  # Tank Molecules number Differential
+        dNb = Q  # Barrel Molecules Number Differential
+    
+        return v, a, dNt, dNb
+
 ## Projectile with air resistance using iterative method
 
 This demo introduces air resistance affecting the trajectory of the projectile. The path is plotted using an iterative loop to solve the ODE system of equations.
