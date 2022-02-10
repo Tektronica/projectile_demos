@@ -65,6 +65,49 @@ This demo introduces the mass of the projectile, which requires the exit velocit
 <!-- v_{iso}={\sqrt{\frac{2}{m}\left(P_{0}V_{0}\ln{\left(1+\frac{xA}{V_{0}}\right)} - xAP_{atm} - xF_{friction}\right)}} -->
 ![exit velocity under isothermal expansion](https://latex.codecogs.com/png.image?\dpi{110}%20\bg_white%20v_{iso}={\sqrt{\frac{2}{m}\left(P_{0}V_{0}\ln{\left(1+\frac{xA}{V_{0}}\right)}%20-%20xAP_{atm}%20-%20xF_{friction}\right)}})
 
+Fow rate is modeled as a function of the pressure differential between the tank pressure and the barrel pressure.
+
+<!-- v_{iso}={\sqrt{\frac{2}{m}\left(P_{0}V_{0}\ln{\left(1+\frac{xA}{V_{0}}\right)} - xAP_{atm} - xF_{friction}\right)}} -->
+![pressure ratio](https://latex.codecogs.com/png.image?\dpi{110}%20\bg_white%20v_{iso}={\sqrt{\frac{2}{m}\left(P_{0}V_{0}\ln{\left(1+\frac{xA}{V_{0}}\right)}%20-%20xAP_{atm}%20-%20xF_{friction}\right)}})
+
+<!-- v_{iso}={\sqrt{\frac{2}{m}\left(P_{0}V_{0}\ln{\left(1+\frac{xA}{V_{0}}\right)} - xAP_{atm} - xF_{friction}\right)}} -->
+![flow rate, Q](https://latex.codecogs.com/png.image?\dpi{110}%20\bg_white%20v_{iso}={\sqrt{\frac{2}{m}\left(P_{0}V_{0}\ln{\left(1+\frac{xA}{V_{0}}\right)}%20-%20xAP_{atm}%20-%20xF_{friction}\right)}})
+
+Gas expansion in the barrel and the tank are modeled using the Ideal Gas Law
+
+<!-- v_{iso}={\sqrt{\frac{2}{m}\left(P_{0}V_{0}\ln{\left(1+\frac{xA}{V_{0}}\right)} - xAP_{atm} - xF_{friction}\right)}} -->
+![expansion with respect to tank and barrel](https://latex.codecogs.com/png.image?\dpi{110}%20\bg_white%20v_{iso}={\sqrt{\frac{2}{m}\left(P_{0}V_{0}\ln{\left(1+\frac{xA}{V_{0}}\right)}%20-%20xAP_{atm}%20-%20xF_{friction}\right)}})
+
+The number of molecules in the tank and barrel are governed by the flow fo molecules between them through the valve.
+
+<!-- v_{iso}={\sqrt{\frac{2}{m}\left(P_{0}V_{0}\ln{\left(1+\frac{xA}{V_{0}}\right)} - xAP_{atm} - xF_{friction}\right)}} -->
+![N, molecules](https://latex.codecogs.com/png.image?\dpi{110}%20\bg_white%20v_{iso}={\sqrt{\frac{2}{m}\left(P_{0}V_{0}\ln{\left(1+\frac{xA}{V_{0}}\right)}%20-%20xAP_{atm}%20-%20xF_{friction}\right)}})
+
+Consequently, the system of differential of equations to resolve the exit velocity influenced by valve flow rate is provided below.
+
+<!--
+\frac{\mathrm{d}}{\mathrm{d}x}
+\begin{pmatrix}
+ x\\
+ v\\
+ N_{t}\\
+ N_{b}
+\end{pmatrix}
+=
+\begin{pmatrix}
+\begin{array}{l}
+ v_{t}\\
+ \frac{A}{m}(P_{t}(t)-P_{b}(t))\\
+ -Q\\
+ Q
+\end{array}
+\end{pmatrix}
+-->
+![exit velocity corrected for valve flow rate](https://latex.codecogs.com/svg.image?\bg_white&space;\frac{\mathrm{d}&space;}{\mathrm{d}&space;x}\begin{pmatrix}&space;x&space;\\\\&space;y&space;\\\\&space;V_{x}&space;\\\\&space;V_{y}&space;\end{pmatrix}=\begin{pmatrix}\begin{array}&space;{l}V_{x}&space;\\\\&space;V_{y}&space;\\\\-{\mu}V_{x}\sqrt{V_{x}^2&plus;V_{y}^2}&space;\\\\&space;-{\mu}V_{y}\sqrt{V_{x}^2&plus;V_{y}^2}-g&space;\end{array}\end{pmatrix}=\begin{pmatrix}\begin{array}&space;{l}V_{x}&space;\\\\&space;V_{y}&space;\\\\&space;-{\mu}V_{x}V_{0}&space;\\\\&space;-{\mu}V_{y}V_{0}-g&space;\end{array}\end{pmatrix})
+
+
+![Exit Velocity](images/demo_04_exit_velocity.png)
+
 ## Projectile with air resistance using iterative method
 
 This demo introduces air resistance affecting the trajectory of the projectile. The path is plotted using an iterative loop to solve the ODE system of equations.
