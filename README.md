@@ -83,7 +83,7 @@ The number of molecules in the tank and barrel are governed by the flow fo molec
 <!-- v_{iso}={\sqrt{\frac{2}{m}\left(P_{0}V_{0}\ln{\left(1+\frac{xA}{V_{0}}\right)} - xAP_{atm} - xF_{friction}\right)}} -->
 ![N, molecules](https://latex.codecogs.com/png.image?\dpi{110}%20\bg_white%20v_{iso}={\sqrt{\frac{2}{m}\left(P_{0}V_{0}\ln{\left(1+\frac{xA}{V_{0}}\right)}%20-%20xAP_{atm}%20-%20xF_{friction}\right)}})
 
-Consequently, the system of differential of equations to resolve the exit velocity influenced by valve flow rate is provided below.
+Consequently, the system of differential equations to resolve the exit velocity influenced by valve flow rate is provided below.
 
 <!--
 \frac{\mathrm{d}}{\mathrm{d}x}
