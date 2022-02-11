@@ -75,43 +75,46 @@ This demo introduces the mass of the projectile, which requires the exit velocit
 
 Fow rate is modeled as a function of the pressure differential between the tank pressure and the barrel pressure.
 
-<!-- v_{iso}={\sqrt{\frac{2}{m}\left(P_{0}V_{0}\ln{\left(1+\frac{xA}{V_{0}}\right)} - xAP_{atm} - xF_{friction}\right)}} -->
-![pressure ratio](https://latex.codecogs.com/png.image?\dpi{110}%20\bg_white%20v_{iso}={\sqrt{\frac{2}{m}\left(P_{0}V_{0}\ln{\left(1+\frac{xA}{V_{0}}\right)}%20-%20xAP_{atm}%20-%20xF_{friction}\right)}})
+<!-- r\equiv 1-\frac{P_{t}(t)}{P_{b}(t)} -->
+![pressure ratio](https://latex.codecogs.com/svg.image?\bg_white&space;r\equiv&space;1-\frac{P_{t}(t)}{P_{b}(t)})
 
-<!-- v_{iso}={\sqrt{\frac{2}{m}\left(P_{0}V_{0}\ln{\left(1+\frac{xA}{V_{0}}\right)} - xAP_{atm} - xF_{friction}\right)}} -->
-![flow rate, Q](https://latex.codecogs.com/png.image?\dpi{110}%20\bg_white%20v_{iso}={\sqrt{\frac{2}{m}\left(P_{0}V_{0}\ln{\left(1+\frac{xA}{V_{0}}\right)}%20-%20xAP_{atm}%20-%20xF_{friction}\right)}})
+<!--
+Q=
+\left\{\begin{matrix}
+\begin{array}{l}
+ BP(t)C_{v}(1-\frac{r}{3r_{max}})\sqrt{\frac{r}{G_{g}TZ}}, &  P(t)<\frac{P_{b}(t)}{1-r_{max}}\\
+ \frac{2}{3}BP(t)C_{v}\sqrt{\frac{r_{max}}{G_{g}TZ}},&  P(t){\ge}\frac{P_{b}(t)}{1-r_{max}}\\
+\end{array}
+\end{matrix}\right.
+-->
+![flow rate, Q](https://latex.codecogs.com/svg.image?\bg_white&space;Q=\left\{\begin{matrix}&space;BP(t)C_{v}(1-\frac{r}{3r_{max}})\sqrt{\frac{r}{G_{g}TZ}},&space;&&space;&space;P(t)<\frac{P_{b}(t)}{1-r_{max}}\\\\&space;\frac{2}{3}BP(t)C_{v}\sqrt{\frac{r_{max}}{G_{g}TZ}},&&space;&space;P(t){\ge}\frac{P_{b}(t)}{1-r_{max}}\\\\\end{matrix}\right.)
 
 Gas expansion in the barrel and the tank are modeled using the Ideal Gas Law
 
-<!-- v_{iso}={\sqrt{\frac{2}{m}\left(P_{0}V_{0}\ln{\left(1+\frac{xA}{V_{0}}\right)} - xAP_{atm} - xF_{friction}\right)}} -->
-![expansion with respect to tank and barrel](https://latex.codecogs.com/png.image?\dpi{110}%20\bg_white%20v_{iso}={\sqrt{\frac{2}{m}\left(P_{0}V_{0}\ln{\left(1+\frac{xA}{V_{0}}\right)}%20-%20xAP_{atm}%20-%20xF_{friction}\right)}})
+<!-- 
+\begin{align*}
+ P(t)V_{0}&=N_{t}(t)k_{B}T\\
+ P(t)V_{0}A(d+x(t))&=N_{b}(t)k_{B}T 
+\end{align}
+-->
+![expansion with respect to tank and barrel](https://latex.codecogs.com/png.image?\dpi{110}%20\bg_white%20\begin{align*}%20P(t)V_{0}&=N_{t}(t)k_{B}T\\\\%20P(t)V_{0}A(d+x(t))&=N_{b}(t)k_{B}T%20\end{align})
 
 The number of molecules in the tank and barrel are governed by the flow fo molecules between them through the valve.
 
-<!-- v_{iso}={\sqrt{\frac{2}{m}\left(P_{0}V_{0}\ln{\left(1+\frac{xA}{V_{0}}\right)} - xAP_{atm} - xF_{friction}\right)}} -->
-![N, molecules](https://latex.codecogs.com/png.image?\dpi{110}%20\bg_white%20v_{iso}={\sqrt{\frac{2}{m}\left(P_{0}V_{0}\ln{\left(1+\frac{xA}{V_{0}}\right)}%20-%20xAP_{atm}%20-%20xF_{friction}\right)}})
+<!-- 
+\begin{align*}
+ \frac{\mathrm{d} N_{t}}{\mathrm{d} t}&= -Q\\
+ \frac{\mathrm{d} N_{t}}{\mathrm{d} t}&= Q
+\end{align}
+-->
+![N, molecules](https://latex.codecogs.com/png.image?\dpi{110}%20\bg_white%20\begin{align*}%20\frac{\mathrm{d}%20N_{t}}{\mathrm{d}%20t}&=%20-Q\\\\%20\frac{\mathrm{d}%20N_{t}}{\mathrm{d}%20t}&=%20Q\end{align}})
 
 Consequently, the system of differential equations to resolve the exit velocity influenced by valve flow rate is provided below.
 
 <!--
-\frac{\mathrm{d}}{\mathrm{d}x}
-\begin{pmatrix}
- x\\
- v\\
- N_{t}\\
- N_{b}
-\end{pmatrix}
-=
-\begin{pmatrix}
-\begin{array}{l}
- v_{t}\\
- \frac{A}{m}(P_{t}(t)-P_{b}(t))\\
- -Q\\
- Q
-\end{array}
-\end{pmatrix}
+\frac{\mathrm{d}}{\mathrm{d}x}\begin{pmatrix} x\\ v\\ N_{t}\\ N_{b}\end{pmatrix}=\begin{pmatrix}\begin{array}{l} v_{t}\\ \dfrac{A}{m}(P_{t}(t)-P_{b}(t))\\ -Q\\ Q\end{array}\end{pmatrix}
 -->
-![exit velocity corrected for valve flow rate](https://latex.codecogs.com/svg.image?\bg_white&space;\frac{\mathrm{d}&space;}{\mathrm{d}&space;x}\begin{pmatrix}&space;x&space;\\\\&space;y&space;\\\\&space;V_{x}&space;\\\\&space;V_{y}&space;\end{pmatrix}=\begin{pmatrix}\begin{array}&space;{l}V_{x}&space;\\\\&space;V_{y}&space;\\\\-{\mu}V_{x}\sqrt{V_{x}^2&plus;V_{y}^2}&space;\\\\&space;-{\mu}V_{y}\sqrt{V_{x}^2&plus;V_{y}^2}-g&space;\end{array}\end{pmatrix}=\begin{pmatrix}\begin{array}&space;{l}V_{x}&space;\\\\&space;V_{y}&space;\\\\&space;-{\mu}V_{x}V_{0}&space;\\\\&space;-{\mu}V_{y}V_{0}-g&space;\end{array}\end{pmatrix})
+![exit velocity corrected for valve flow rate](https://latex.codecogs.com/png.image?\dpi{110}%20\bg_white%20\frac{\mathrm{d}}{\mathrm{d}x}\begin{pmatrix}%20x\\\\%20v\\\\%20N_{t}\\\\%20N_{b}\end{pmatrix}=\begin{pmatrix}\begin{array}{l}%20v_{t}\\\\%20\dfrac{A}{m}(P_{t}(t)-P_{b}(t))\\\\%20-Q\\\\%20Q\end{array}\end{pmatrix})
 
 
 ![Exit Velocity](images/demo_04_exit_velocity.png)
