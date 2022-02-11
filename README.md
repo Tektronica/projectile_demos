@@ -83,13 +83,13 @@ Q=
 \left\{
 \begin{matrix}
 \begin{array}{ll}
- BP(t)C_{v}(1-\frac{r}{3r_{max}})\sqrt{\frac{r}{G_{g}TZ}}, &  P(t)<\frac{P_{b}(t)}{1-r_{max}}\\
- \frac{2}{3}BP(t)C_{v}\sqrt{\frac{r_{max}}{G_{g}TZ}},&  P(t){\ge}\frac{P_{b}(t)}{1-r_{max}}\\
+ BP(t)C_{v}(1-\dfrac{r}{3r_{max}})\sqrt{\dfrac{r}{G_{g}TZ}}, &  P(t)<\dfrac{P_{b}(t)}{1-r_{max}}\\
+ \dfrac{2}{3}BP(t)C_{v}\sqrt{\dfrac{r_{max}}{G_{g}TZ}},&  P(t){\ge}\dfrac{P_{b}(t)}{1-r_{max}}\\
 \end{array}
 \end{matrix}
 \right.
 -->
-![flow rate, Q](https://latex.codecogs.com/png.image?\dpi{110}%20\bg_white%20Q=\left\{\begin{matrix}\begin{array}{ll}%20BP(t)C_{v}(1-\frac{r}{3r_{max}})\sqrt{\frac{r}{G_{g}TZ}},%20&%20%20P(t)%3C\frac{P_{b}(t)}{1-r_{max}}\\\\%20\frac{2}{3}BP(t)C_{v}\sqrt{\frac{r_{max}}{G_{g}TZ}},&%20%20P(t){\ge}\frac{P_{b}(t)}{1-r_{max}}\\\\\end{array}\end{matrix}\right.)
+![flow rate, Q](https://latex.codecogs.com/png.image?\dpi{110}%20\bg_white%20Q=\left\{\begin{matrix}\begin{array}{ll}%20BP(t)C_{v}(1-\dfrac{r}{3r_{max}})\sqrt{\dfrac{r}{G_{g}TZ}},%20&%20%20P(t)%3C\dfrac{P_{b}(t)}{1-r_{max}}\\\\%20\dfrac{2}{3}BP(t)C_{v}\sqrt{\dfrac{r_{max}}{G_{g}TZ}},&%20%20P(t){\ge}\dfrac{P_{b}(t)}{1-r_{max}}\\\\\end{array}\end{matrix}\right.)
 
 <!--
 \begin{matrix}
@@ -101,19 +101,16 @@ Q=
 Gas expansion in the barrel and the tank are modeled using the Ideal Gas Law
 
 <!-- 
-\begin{align*}
- P(t)V_{0}&=N_{t}(t)k_{B}T\\
- P(t)V_{0}A(d+x(t))&=N_{b}(t)k_{B}T 
-\end{align}
+\begin{align*} P(t)V_{0}&=N_{t}(t)k_{B}T\\ P(t)_{b}V_{0}A(d+x(t))&=N_{b}(t)k_{B}T \end{align}
 -->
-![expansion with respect to tank and barrel](https://latex.codecogs.com/png.image?\dpi{110}%20\bg_white%20\begin{align*}%20P(t)V_{0}&=N_{t}(t)k_{B}T\\\\%20P(t)V_{0}A(d+x(t))&=N_{b}(t)k_{B}T%20\end{align})
+![expansion with respect to tank and barrel](https://latex.codecogs.com/png.image?\dpi{110}%20\bg_white%20\begin{align*}%20P(t)V_{0}&=N_{t}(t)k_{B}T\\%20P(t)_{b}V_{0}A(d+x(t))&=N_{b}(t)k_{B}T%20\end{align})
 
 The number of molecules in the tank and barrel are governed by the flow fo molecules between them through the valve.
 
 <!-- 
 \begin{align*}
- \frac{\mathrm{d} N_{t}}{\mathrm{d} t}&= -Q\\
- \frac{\mathrm{d} N_{t}}{\mathrm{d} t}&= Q
+ P(t)V_{0}&=N_{t}(t)k_{B}T\\
+ P(t)_{b}V_{0}A(d+x(t))&=N_{b}(t)k_{B}T
 \end{align}
 -->
 ![N, molecules](https://latex.codecogs.com/png.image?\dpi{110}%20\bg_white%20\begin{align*}%20\frac{\mathrm{d}%20N_{t}}{\mathrm{d}%20t}&=%20-Q\\\\%20\frac{\mathrm{d}%20N_{t}}{\mathrm{d}%20t}&=%20Q\end{align})
