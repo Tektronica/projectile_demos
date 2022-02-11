@@ -66,7 +66,7 @@ def run_projectile_resistance_demo(launch_angle, v0, h):
     hit_target.terminal = True
     # We must be moving downwards (don't stop before we begin moving upwards!)
     hit_target.direction = -1
-    for loop, rho in enumerate([rho_air, rho_hydrogen]):
+    for loop, rho in enumerate([rho_hydrogen, rho_air]):
 
         # scipy.integrate.solve_ivp(func, t_span, y0, args=() ...)
         # each event occurs at the zeros of a continuous function of time and state
@@ -127,7 +127,7 @@ def plot(x, y):
     ax1.set_title('Projectile Demo with air resistance')
     ax1.set_xlabel('distance (m)')
     ax1.set_ylabel('height (m)')
-    ax1.legend(['$\\rho=0$', f'$\\rho={rho_air}$ (air)', f'$\\rho={rho_hydrogen}$ (hydrogen)'])
+    ax1.legend(['$\\rho=0.0$ (vacuum)', f'$\\rho={rho_hydrogen}$ (hydrogen)', f'$\\rho={rho_air}$ (air)'])
 
     plt.grid()
     plt.show()

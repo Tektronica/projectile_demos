@@ -50,7 +50,7 @@ def run_projectile_resistance_demo(launch_angle, v0, h):
     X_WD = list()
     Y_WD = list()
 
-    for loop, rho in enumerate([rho_air, rho_hydrogen]):
+    for loop, rho in enumerate([rho_hydrogen, rho_air]):
         sol = iterative((x0, y0, Vx0, Vy0), dt, steps, rho)
 
         # Retrieve the solution and append
@@ -152,7 +152,7 @@ def plot(x, y):
     ax1.set_title('Projectile Demo with air resistance')
     ax1.set_xlabel('distance (m)')
     ax1.set_ylabel('height (m)')
-    ax1.legend(['$\\rho=0$', f'$\\rho={rho_air}$ (air)', f'$\\rho={rho_hydrogen}$ (hydrogen)'])
+    ax1.legend(['$\\rho=0.0$ (vacuum)', f'$\\rho={rho_hydrogen}$ (hydrogen)', f'$\\rho={rho_air}$ (air)'])
 
     plt.grid()
     plt.show()

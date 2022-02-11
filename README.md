@@ -294,6 +294,7 @@ This demo improves on the previous section by using the scipy built-in function 
         ay = -k / m * Vxy * Vy - G  # acceleration in y direction
         return Vx, Vy, ax, ay    
 
+
     def hit_target(t, u, *args):
         # We've hit the target if the z-coordinate is 0.
         return u[1]
@@ -354,17 +355,6 @@ This demo improves on the previous section by using the scipy built-in function 
         y = [Y_ND, Y_WD]
     
         plot(x, y)
-    
-    
-    def deriv(t, u, rho):
-        x, y, Vx, Vy = u
-        k = 0.5 * Cd * rho * A  # convenience constant
-    
-        Vxy = np.hypot(Vx, Vy)
-        ax = -k / m * Vxy * Vx  # acceleration in x direction
-        ay = -k / m * Vxy * Vy - G  # acceleration in y direction
-        return Vx, Vy, ax, ay
-
 
 ## Projectile with air resistance to target
 
