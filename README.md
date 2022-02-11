@@ -83,20 +83,19 @@ Q=
 \left\{
 \begin{matrix}
 \begin{array}{ll}
- BP(t)C_{v}(1-\dfrac{r}{3r_{max}})\sqrt{\dfrac{r}{G_{g}TZ}}, &  P(t)<\dfrac{P_{b}(t)}{1-r_{max}}\\
- \dfrac{2}{3}BP(t)C_{v}\sqrt{\dfrac{r_{max}}{G_{g}TZ}},&  P(t){\ge}\dfrac{P_{b}(t)}{1-r_{max}}\\
+ BP(t)C_{v}\left(1-\dfrac{r}{3r_{max}}\right)\sqrt{\dfrac{r}{G_{g}TZ}}\text{,}&P(t)<\dfrac{P_{b}(t)}{1-r_{max}}\\
+ \dfrac{2}{3}BP(t)C_{v}\sqrt{\dfrac{r_{max}}{G_{g}TZ}}\text{,}&P(t)\ge\dfrac{P_{b}(t)}{1-r_{max}}\\
 \end{array}
 \end{matrix}
 \right.
 -->
-![flow rate, Q](https://latex.codecogs.com/png.image?\dpi{110}%20\bg_white%20Q=\left\{\begin{matrix}\begin{array}{ll}%20BP(t)C_{v}(1-\dfrac{r}{3r_{max}})\sqrt{\dfrac{r}{G_{g}TZ}},%20&%20%20P(t)%3C\dfrac{P_{b}(t)}{1-r_{max}}\\\\%20\dfrac{2}{3}BP(t)C_{v}\sqrt{\dfrac{r_{max}}{G_{g}TZ}},&%20%20P(t){\ge}\dfrac{P_{b}(t)}{1-r_{max}}\\\\\end{array}\end{matrix}\right.)
-
+![flow rate, Q](https://latex.codecogs.com/png.image?\dpi{110}%20\bg_white%20Q=\left\{\begin{matrix}\begin{array}{ll}%20BP(t)C_{v}\left(1-\dfrac{r}{3r_{max}}\right)\sqrt{\dfrac{r}{G_{g}TZ}}\text{,}&P(t)%3C\dfrac{P_{b}(t)}{1-r_{max}}\\\\%20%20\dfrac{2}{3}BP(t)C_{v}\sqrt{\dfrac{r_{max}}{G_{g}TZ}}\text{,}&P(t)\ge\dfrac{P_{b}(t)}{1-r_{max}}\\\\%20\end{array}\end{matrix}\right{.})
 <!--
 \begin{matrix}
- B=3.11\times10^{19}\left[\frac{\sqrt{K}}{Pa{\cdot}s}\right],&  G_{g}=1, &T=237[K],& Z\approx 1  \\
+ B=3.11\times10^{19}\left[\frac{\sqrt{K}}{Pa{\cdot}s}\right],&  G_{g}=1, &T=273[K],& Z\approx 1  \\
 \end{matrix}
 -->
-![flow rate, Q](https://latex.codecogs.com/png.image?\dpi{110}%20\bg_white%20\begin{matrix}%20B=3.11\times10^{19}\left[\frac{\sqrt{K}}{Pa{\cdot}s}\right],&%20%20G_{g}=1,%20&T=237[K],&%20Z\approx%201%20%20\\\\\end{matrix})
+![Constants used in flow rate](https://latex.codecogs.com/png.image?\dpi{110}%20\bg_white%20\begin{matrix}%20B=3.11\times10^{19}\left[\frac{\sqrt{K}}{Pa{\cdot}s}\right],&%20%20G_{g}=1,%20&T=273[K],&%20Z\approx%201%20%20\\\\\end{matrix})
 
 Gas expansion in the barrel and the tank are modeled using the Ideal Gas Law
 
