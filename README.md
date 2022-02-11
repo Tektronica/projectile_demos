@@ -209,49 +209,74 @@ This demo introduces air resistance affecting the trajectory of the projectile. 
 
 ![target_air_resistance](images/demo_06_air_resistance.png)
 
+    def deriv(t, u, rho):
+        x, y, Vx, Vy = u
+        k = 0.5 * Cd * rho * A  # convenience constant
+    
+        Vxy = np.hypot(Vx, Vy)
+        ax = -k / m * Vxy * Vx  # acceleration in x direction
+        ay = -k / m * Vxy * Vy - G  # acceleration in y direction
+        return Vx, Vy, ax, ay
+
+
     def iterative(u0, dt, steps, rho):
         x0, y0, Vx0, Vy0 = u0
-
-        x = list()
-        y = list()
-        Vx = list()
-        Vy = list()
     
-        x.append(x0)
-        y.append(y0)
-        Vx.append(Vx0)
-        Vy.append(Vy0)
+        x_list = list()
+        y_list = list()
+        Vx_list = list()
+        Vy_list = list()
     
+        x_list.append(x0)
+        y_list.append(y0)
+        Vx_list.append(Vx0)
+        Vy_list.append(Vy0)
+    
+        # Interval of integration by ODE method up to tf -------------------------------------------------------------------
         stop = 0  # stop condition flag to end for loop
         tof = 0  # time of flight
         ttm = 0  # time to max
         last_smallest_Vy = 1e05
     
-        k = 0.5 * Cd * rho * A  # convenience constant
+        # Initial conditions -------------------------------------------------------------------------------------------
+        x, y, Vx, Vy = x0, y0, Vx0, Vy0
     
         for t in range(1, steps + 1):
             if stop != 1:
-                Vxy = np.hypot(Vx[t - 1], Vy[t - 1])
+                u = x, y, Vx, Vy
     
-                # First calculate velocity
-                Vx.append(Vx[t - 1] * (1.0 - k / m * Vxy * dt))
-                Vy.append(Vy[t - 1] + (- G - k / m * Vy[t - 1] * Vxy) * dt)
+                # log data -------------------------------------------------------------------------------------------------
+                Vx, Vy, ax, ay = deriv(t, u, rho)
     
-                # Now calculate position
-                x.append(x[t - 1] + Vx[t - 1] * dt)
-                y.append(y[t - 1] + Vy[t - 1] * dt)
+                # increment state by dt ------------------------------------------------------------------------------------
+                # position
+                x += Vx * dt
+                y += Vy * dt
+    
+                # velocity
+                Vx += ax * dt
+                Vy += ay * dt
+    
+                t += t * dt
+    
+                # log data -------------------------------------------------------------------------------------------------
+                x_list.append(x)
+                y_list.append(y)
+    
+                Vx_list.append(Vx)
+                Vy_list.append(Vy)
     
                 # log event - reached highest point why Vy=0 (note: discrete dt step misses 0.0)
-                if np.abs(Vy[t]) < last_smallest_Vy:
-                    last_smallest_Vy = Vy[t]
+                if np.abs(Vy) < last_smallest_Vy:
+                    last_smallest_Vy = Vy
                     ttm = t * dt
     
                 # stop event - hit target
-                if y[t] <= 0.0:
+                if y <= 0.0:
                     tof = t * dt
                     stop = 1
     
-        return x, y, Vx, Vy, tof, ttm
+        return x_list, y_list, Vx_list, Vy_list, tof, ttm
 
 
 ## Projectile with air resistance using ODE scipy method
@@ -259,6 +284,24 @@ This demo introduces air resistance affecting the trajectory of the projectile. 
 This demo improves on the previous section by using the scipy built-in function to solve for the ODE. Events are used to trigger when the projectile has reached its target.
 
 ![trajectory](https://latex.codecogs.com/svg.image?\bg_white&space;y&space;=&space;y_0&space;&plus;&space;tan(\theta_{i})&space;x&space;-&space;\frac{g}{2V_{0}^2cos(\theta_{i})}x&space;^2)
+
+    def deriv(t, u, rho):
+        x, y, Vx, Vy = u
+        k = 0.5 * Cd * rho * A  # convenience constant
+    
+        Vxy = np.hypot(Vx, Vy)
+        ax = -k / m * Vxy * Vx  # acceleration in x direction
+        ay = -k / m * Vxy * Vy - G  # acceleration in y direction
+        return Vx, Vy, ax, ay    
+
+    def hit_target(t, u, *args):
+        # We've hit the target if the z-coordinate is 0.
+        return u[1]
+    
+    
+    def max_height(t, u, *args):
+        # The maximum height is obtained when the y-velocity is zero.
+        return u[3]
 
     def run_projectile_resistance_demo(launch_angle, v0, h):
         phi0 = np.radians(launch_angle)
@@ -321,16 +364,6 @@ This demo improves on the previous section by using the scipy built-in function 
         ax = -k / m * Vxy * Vx  # acceleration in x direction
         ay = -k / m * Vxy * Vy - G  # acceleration in y direction
         return Vx, Vy, ax, ay
-    
-    
-    def hit_target(t, u, *args):
-        # We've hit the target if the z-coordinate is 0.
-        return u[1]
-    
-    
-    def max_height(t, u, *args):
-        # The maximum height is obtained when the y-velocity is zero.
-        return u[3]
 
 
 ## Projectile with air resistance to target
