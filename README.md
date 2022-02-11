@@ -80,14 +80,23 @@ Fow rate is modeled as a function of the pressure differential between the tank 
 
 <!--
 Q=
-\left\{\begin{matrix}
-\begin{array}{l}
+\left\{
+\begin{matrix}
+\begin{array}{ll}
  BP(t)C_{v}(1-\frac{r}{3r_{max}})\sqrt{\frac{r}{G_{g}TZ}}, &  P(t)<\frac{P_{b}(t)}{1-r_{max}}\\
  \frac{2}{3}BP(t)C_{v}\sqrt{\frac{r_{max}}{G_{g}TZ}},&  P(t){\ge}\frac{P_{b}(t)}{1-r_{max}}\\
 \end{array}
-\end{matrix}\right.
+\end{matrix}
+\right.
 -->
-![flow rate, Q](https://latex.codecogs.com/svg.image?\bg_white&space;Q=\left\{\begin{matrix}&space;BP(t)C_{v}(1-\frac{r}{3r_{max}})\sqrt{\frac{r}{G_{g}TZ}},&space;&&space;&space;P(t)<\frac{P_{b}(t)}{1-r_{max}}\\\\&space;\frac{2}{3}BP(t)C_{v}\sqrt{\frac{r_{max}}{G_{g}TZ}},&&space;&space;P(t){\ge}\frac{P_{b}(t)}{1-r_{max}}\\\\\end{matrix}\right.)
+![flow rate, Q](https://latex.codecogs.com/png.image?\dpi{110}%20\bg_white%20Q=\left\{\begin{matrix}\begin{array}{ll}%20BP(t)C_{v}(1-\frac{r}{3r_{max}})\sqrt{\frac{r}{G_{g}TZ}},%20&%20%20P(t)%3C\frac{P_{b}(t)}{1-r_{max}}\\\\%20\frac{2}{3}BP(t)C_{v}\sqrt{\frac{r_{max}}{G_{g}TZ}},&%20%20P(t){\ge}\frac{P_{b}(t)}{1-r_{max}}\\\\\end{array}\end{matrix}\right.)
+
+<!--
+\begin{matrix}
+ B=3.11\times10^{19}\left[\frac{\sqrt{K}}{Pa{\cdot}s}\right],&  G_{g}=1, &T=237[K],& Z\approx 1  \\
+\end{matrix}
+-->
+![flow rate, Q](https://latex.codecogs.com/png.image?\dpi{110}%20\bg_white%20\begin{matrix}%20B=3.11\times10^{19}\left[\frac{\sqrt{K}}{Pa{\cdot}s}\right],&%20%20G_{g}=1,%20&T=237[K],&%20Z\approx%201%20%20\\\end{matrix})
 
 Gas expansion in the barrel and the tank are modeled using the Ideal Gas Law
 
@@ -107,7 +116,7 @@ The number of molecules in the tank and barrel are governed by the flow fo molec
  \frac{\mathrm{d} N_{t}}{\mathrm{d} t}&= Q
 \end{align}
 -->
-![N, molecules](https://latex.codecogs.com/png.image?\dpi{110}%20\bg_white%20\begin{align*}%20\frac{\mathrm{d}%20N_{t}}{\mathrm{d}%20t}&=%20-Q\\\\%20\frac{\mathrm{d}%20N_{t}}{\mathrm{d}%20t}&=%20Q\end{align}})
+![N, molecules](https://latex.codecogs.com/png.image?\dpi{110}%20\bg_white%20\begin{align*}%20\frac{\mathrm{d}%20N_{t}}{\mathrm{d}%20t}&=%20-Q\\\\%20\frac{\mathrm{d}%20N_{t}}{\mathrm{d}%20t}&=%20Q\end{align})
 
 Consequently, the system of differential equations to resolve the exit velocity influenced by valve flow rate is provided below.
 
