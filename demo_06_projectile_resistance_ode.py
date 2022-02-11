@@ -116,7 +116,7 @@ def max_height(t, u, *args):
 
 
 def plot(x, y):
-    fig, ax1 = plt.subplots()
+    fig, ax1 = plt.subplots(figsize=(10, 5))
 
     if isinstance(x[0], list):
         for i in range(len(x)):

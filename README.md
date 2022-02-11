@@ -21,6 +21,8 @@ concept introduced.
 
 ![trajectory](https://latex.codecogs.com/svg.image?\bg_white&space;y&space;=&space;y_0&space;&plus;&space;tan(\theta_{i})&space;x&space;-&space;\frac{g}{2V_{0}^2cos(\theta_{i})}x&space;^2)
 
+![trajectory_plot](images/demo_00_projectile.png)
+
 ## Projectile given velocity and distance
 
 The standard projectile equation is used to find the launch angle given a fixed velocity and the distance to the target.
@@ -29,6 +31,8 @@ however the maximum distance achieved by a fixed velocity launch is at 45 degree
 
 <!-- \theta_{i}=tan^{-1} \left(\frac{V_{0}^{2} + \sqrt{V_{0}^{4} - g(g x_{final}^2 + 2(y_{final} - y_{0})V_{0}^{2})}}{g x_{final}}\right) -->
 ![find launch angle with fixed velocity](https://latex.codecogs.com/svg.image?\bg_white&space;\theta_{i}=tan^{-1}&space;\left(\frac{V_{0}^{2}&space;&plus;&space;\sqrt{V_{0}^{4}&space;-&space;g(g&space;x_{final}^2&space;&plus;&space;2(y_{final}&space;-&space;y_{0})V_{0}^{2})}}{g&space;x_{final}}\right))
+
+![fixed_velocity_plot](images/demo_01_target_fixed_velocity.png)
 
 ## Projectile given target angle and distance
 
@@ -40,6 +44,8 @@ example maximizes the angle of attack (AoA) to the target to minimize bounce or 
 
 <!-- V_{0}=\frac{1}{cos(\theta_{i})} \sqrt{\frac{g x_{final}}{tan(\theta_{i}) - tan(\theta_{final})}} -->
 ![find launch velocity given target angle](https://latex.codecogs.com/svg.image?\bg_white&space;V_{0}=\frac{1}{cos(\theta_{i})}&space;\sqrt{\frac{g&space;x_{final}}{tan(\theta_{i})&space;-&space;tan(\theta_{final})}})
+
+![target_angle_plot](images/demo_02_target_angle.png)
 
 ## Projectile given max height
 
@@ -54,6 +60,8 @@ a max ceiling. This example limits the height of the trajectory to avoid a ceili
 
 <!-- V_{0}=\frac{1}{cos(\theta_{i})} \sqrt{\frac{g x_{final}}{tan(\theta_{i}) - tan(\theta_{final})}} -->
 ![find launch velocity given target angle](https://latex.codecogs.com/svg.image?\bg_white&space;V_{0}=\frac{1}{cos(\theta_{i})}&space;\sqrt{\frac{g&space;x_{final}}{tan(\theta_{i})&space;-&space;tan(\theta_{final})}})
+
+![target_ceiling_plot](images/demo_03_target_ceiling.png)
 
 ## Calculating Exit Velocity
 
@@ -109,7 +117,7 @@ Consequently, the system of differential equations to resolve the exit velocity 
 ![Exit Velocity](images/demo_04_exit_velocity.png)
 
     def get_Q(Pt, Pb, rmax):
-        # REGIME SELECTION -------->
+        # REGIME SELECTION ---------------------------------------------------------------------------------------------
         # the molecular flow rate Q through the valve is a function of the ratio
         r = (Pt - Pb) / Pt
     
@@ -124,23 +132,40 @@ Consequently, the system of differential equations to resolve the exit velocity 
     
     
     def deriv(t, u, *args):
-        # STATE VARIABLES  -------->
+        # STATE VARIABLES  ---------------------------------------------------------------------------------------------
         x, v, Nt, Nb = u
     
-        # CONSTANTS --------> 
+        # CONSTANTS ----------------------------------------------------------------------------------------------------
         V0, Patm, A, d, m, rmax = args
     
-        # FLOW RATE --------> 
+        # FLOW RATE ----------------------------------------------------------------------------------------------------
         Pt = (Nt * K * T) / V0  # Tank Pressure
         Pb = (Nb * K * T) / (A * (d + x))  # Barrel Pressure
         Q = get_Q(Pt, Pb, rmax)
     
-        # SYSTEM OF DIFFERENTIAL EQUATIONS --------> 
+        # SYSTEM OF DIFFERENTIAL EQUATIONS -----------------------------------------------------------------------------
         a = A * (Pb - Patm) / m  # acceleration [m/s^2] F = ma --> AP(t) = ma
         dNt = -Q  # Tank Molecules number Differential
         dNb = Q  # Barrel Molecules Number Differential
     
         return v, a, dNt, dNb
+
+
+    # iterative loop ---------------------------------------------------------------------------------------------------
+    while x <= L:
+        u = x, v, Nt, Nb
+
+        # ODE loop -----------------------------------------------------------------------------------------------------
+        v, a, dNt, dNb = deriv(t, u, V0, Patm, A, d, m, rmax)
+        
+        # increment state by dt ----------------------------------------------------------------------------------------
+        x += v * dt
+        v += a * dt
+
+        Nt += dNt * dt
+        Nb += dNb * dt
+
+        t += t * dt
 
 ## Projectile with air resistance using iterative method
 
@@ -182,6 +207,7 @@ This demo introduces air resistance affecting the trajectory of the projectile. 
 -->
 ![find launch velocity given target angle](https://latex.codecogs.com/svg.image?\bg_white&space;\begin{matrix}{\mu}=\frac{k}{m}&space;&\text{and}&k=\frac{1}{2}C_{d}{\rho}_{air}A\\&space;\end{matrix})
 
+![target_air_resistance](images/demo_06_air_resistance.png)
 
     def iterative(u0, dt, steps, rho):
         x0, y0, Vx0, Vy0 = u0

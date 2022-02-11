@@ -10,9 +10,9 @@ G = 9.81  # m/s^2
 
 def run_demo():
     launch_velocity = 10  # m/s
-    launch_height = 0  # m
+    launch_height = 1  # m
     target_distance = 8  # m
-    target_height = .5  # m
+    target_height = 2  # m
 
     launch_angle = get_launch_angle(launch_velocity, launch_height, target_distance, target_height)
     run_projectile_target_demo(launch_height, target_height, target_distance, launch_angle, launch_velocity)
