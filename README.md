@@ -101,9 +101,12 @@ Q=
 Gas expansion in the barrel and the tank are modeled using the Ideal Gas Law
 
 <!-- 
-\begin{align*} P(t)V_{0}&=N_{t}(t)k_{B}T\\ P(t)_{b}V_{0}A(d+x(t))&=N_{b}(t)k_{B}T \end{align}
+\begin{align*}
+ P(t)V_{0}&=N_{t}(t)k_{B}T\\
+ P(t)_{b}V_{0}A(d+x(t))&=N_{b}(t)k_{B}T
+\end{align}
 -->
-![expansion with respect to tank and barrel](https://latex.codecogs.com/png.image?\dpi{110}%20\bg_white%20\begin{align*}%20P(t)V_{0}&=N_{t}(t)k_{B}T\\%20P(t)_{b}V_{0}A(d+x(t))&=N_{b}(t)k_{B}T%20\end{align})
+![expansion with respect to tank and barrel](https://latex.codecogs.com/png.image?\dpi{110}%20\bg_white%20\begin{align*}%20P(t)V_{0}&=N_{t}(t)k_{B}T\\\\%20P(t)_{b}V_{0}A(d+x(t))&=N_{b}(t)k_{B}T\end{align})
 
 The number of molecules in the tank and barrel are governed by the flow fo molecules between them through the valve.
 
