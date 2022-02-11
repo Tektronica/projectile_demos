@@ -96,7 +96,7 @@ Q=
  B=3.11\times10^{19}\left[\frac{\sqrt{K}}{Pa{\cdot}s}\right],&  G_{g}=1, &T=237[K],& Z\approx 1  \\
 \end{matrix}
 -->
-![flow rate, Q](https://latex.codecogs.com/png.image?\dpi{110}%20\bg_white%20\begin{matrix}%20B=3.11\times10^{19}\left[\frac{\sqrt{K}}{Pa{\cdot}s}\right],&%20%20G_{g}=1,%20&T=237[K],&%20Z\approx%201%20%20\\\end{matrix})
+![flow rate, Q](https://latex.codecogs.com/png.image?\dpi{110}%20\bg_white%20\begin{matrix}%20B=3.11\times10^{19}\left[\frac{\sqrt{K}}{Pa{\cdot}s}\right],&%20%20G_{g}=1,%20&T=237[K],&%20Z\approx%201%20%20\\\\\end{matrix})
 
 Gas expansion in the barrel and the tank are modeled using the Ideal Gas Law
 
