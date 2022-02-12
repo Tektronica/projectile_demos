@@ -16,6 +16,8 @@ from scipy.integrate import solve_ivp
 
 # Physical Conditions --------------------------------------------------------------------------------------------------
 G = 9.81  # acceleration due to gravity (m/s^2)
+Cd = 0.47  # drag coefficient of a sphere
+rho_air = 1.205  # Air density (kg.m-3) @ NTP
 
 Gg = 1  # Specific gravity of air
 T = 293  # temperature, [k]
@@ -196,7 +198,9 @@ def deriv(t, u, *args):
     Q = get_Q(Pt, Pb, rmax)
 
     # SYSTEM OF DIFFERENTIAL EQUATIONS ---------------------------------------------------------------------------------
-    a = A * (Pb - Patm) / m  # acceleration [m/s^2] F = ma --> AP(t) = ma
+    a = A * (Pb - Patm) / m  # acceleration [m/s^2]
+    # k = 0.5 * Cd * rho_air * A
+    # a = a + (-k / m * v * Vx)
     dNt = -Q  # Tank Molecules number Differential
     dNb = Q  # Barrel Molecules Number Differential
 

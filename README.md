@@ -79,17 +79,13 @@ Fow rate is modeled as a function of the pressure differential between the tank 
 ![pressure ratio](https://latex.codecogs.com/svg.image?\bg_white&space;r\equiv&space;1-\frac{P_{t}(t)}{P_{b}(t)})
 
 <!--
-Q=
-\left\{
-\begin{matrix}
-\begin{array}{ll}
+Q =
+\begin{cases}
  BP(t)C_{v}\left(1-\dfrac{r}{3r_{max}}\right)\sqrt{\dfrac{r}{G_{g}TZ}}\text{,}&P(t)<\dfrac{P_{b}(t)}{1-r_{max}}\\
  \dfrac{2}{3}BP(t)C_{v}\sqrt{\dfrac{r_{max}}{G_{g}TZ}}\text{,}&P(t)\ge\dfrac{P_{b}(t)}{1-r_{max}}\\
-\end{array}
-\end{matrix}
-\right.
+\end{cases} 
 -->
-![flow rate, Q](https://latex.codecogs.com/png.image?\dpi{110}%20\bg_white%20Q=\left\{\begin{matrix}\begin{array}{ll}%20BP(t)C_{v}\left(1-\dfrac{r}{3r_{max}}\right)\sqrt{\dfrac{r}{G_{g}TZ}}\text{,}&P(t)%3C\dfrac{P_{b}(t)}{1-r_{max}}\\\\%20%20\dfrac{2}{3}BP(t)C_{v}\sqrt{\dfrac{r_{max}}{G_{g}TZ}}\text{,}&P(t)\ge\dfrac{P_{b}(t)}{1-r_{max}}\\\\%20\end{array}\end{matrix}\right{.})
+![flow rate, Q](https://latex.codecogs.com/png.image?\dpi{110}%20\bg_white%20Q%20=\begin{cases}%20BP(t)C_{v}\left(1-\dfrac{r}{3r_{max}}\right)\sqrt{\dfrac{r}{G_{g}TZ}}\text{,}&P(t)%3C\dfrac{P_{b}(t)}{1-r_{max}}\\\\%20\dfrac{2}{3}BP(t)C_{v}\sqrt{\dfrac{r_{max}}{G_{g}TZ}}\text{,}&P(t)\ge\dfrac{P_{b}(t)}{1-r_{max}}\\\\\end{cases})
 <!--
 \begin{matrix}
  B=3.11\times10^{19}\left[\frac{\sqrt{K}}{Pa{\cdot}s}\right],&  G_{g}=1, &T=273[K],& Z\approx 1  \\
